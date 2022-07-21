@@ -1,27 +1,25 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct node
+typedef struct edge
 {
     char data;
-    struct node *l;
-    struct node *r;
-} node;
+    struct edge *n;
+} edge;
 
 typedef struct
 {
     char data;
     netnode *l;
     netnode *r;
-    node *head;
+    edge *head;
 } netnode;
 
-node *addnode(char data, node *l, node *r)
+edge *addedge(char data, edge *n)
 {
-    node *newnode = (node *)malloc(sizeof(node));
+    edge *newnode = (edge *)malloc(sizeof(edge));
     newnode->data = data;
-    newnode->l = l;
-    newnode->r = r;
+    newnode->n = n;
     return newnode;
 }
 
@@ -34,14 +32,10 @@ netnode *addnetnode(char data, netnode *l, netnode *r)
     return newnode;
 }
 
-node *appendnode(node *R, char din)
+edge *appendedge(edge *R, char din)
 {
-    node *temp = addnode(din, R, R->r);
-    R->l = temp;
-    if (R->r != NULL)
-    {
-        (R->r)->l = temp;
-    }
+    edge *temp = addedge(din,NULL);
+    R->n = temp;
     return temp;
 }
 
@@ -56,44 +50,11 @@ netnode *appendnetnode(netnode *R, char din)
     return temp;
 }
 
-void deletenode(node *p)
+int findedge(char t, edge *head)
 {
-    if (p->l != NULL)
+    while (head->n != NULL)
     {
-        (p->l)->r = p->r;
-    }
-    if (p->r != NULL)
-    {
-        (p->r)->l = p->l;
-    }
-    printf("Deleting:%p:%d\n", p, p->data);
-    free(p);
-}
-
-node *getright(node *p)
-{
-    while (p->r != NULL)
-    {
-        p = p->r;
-    }
-    return p;
-}
-
-node *getleft(node *p)
-{
-    while (p->l != NULL)
-    {
-        p = p->l;
-    }
-    return p;
-}
-
-int findnode(char t, node *head)
-{
-    head = getleft(head);
-    while (head->r != NULL)
-    {
-        head = head->r;
+        head = head->n;
         if (head->data == t)
         {
             return 1;
@@ -101,6 +62,7 @@ int findnode(char t, node *head)
     }
     return 0;
 }
+
 netnode * findnetnode(char t, netnode *head)
 {
     while (head->r != NULL)
@@ -114,13 +76,12 @@ netnode * findnetnode(char t, netnode *head)
     return NULL;
 }
 
-void output(node *p)
+void output(edge *p)
 {
-    p = getleft(p);
     do
     {
-        printf("%d,%p,%p,%p\n", p->data, p->l, p, p->r);
-        p = p->r;
+        printf("%d,%p,%p,%p\n", p->data, p->n);
+        p = p->n;
     } while (p != NULL);
 }
 
@@ -140,29 +101,29 @@ netnode *netinit()
     return N;
 }
 
-int EDGE(netnode *N){
+int initEDGE(netnode *N){
     char C = '1';
     netnode *temp = N;
-    node *p = NULL;
+    edge *p = NULL;
     netnode *f = NULL;
     while (temp->r!=NULL)
     {
         temp = temp->r;
-        printf("Node:%c,connected node :",temp->data);
+        printf("edge:%c,connected edge :",temp->data);
         p = temp->head;
         while (p->l!=NULL)
         {
             printf("%c,",p->data);
             p = p->l;
         }
-        printf("\n input new node connected to %c end with 0",temp->data);
+        printf("\n input new edge connected to %c end with 0",temp->data);
         while (C != '0')
         {
             scanf("%c",&C);
             netnode *f = findnetnode(C,N);
             if(f!=NULL){
-                 appendnode(temp->head,C);
-                 appendnode(f->head,temp->data);
+                 appendedge(temp->head,C);
+                 appendedge(f->head,temp->data);
             }else{
                 printf("node not decleared\n");
             }
