@@ -18,20 +18,20 @@ typedef struct
 
 node *addnode(char data, node *l, node *r)
 {
-    node *new = (node *)malloc(sizeof(node));
-    new->data = data;
-    new->l = l;
-    new->r = r;
-    return new;
+    node *newnode = (node *)malloc(sizeof(node));
+    newnode->data = data;
+    newnode->l = l;
+    newnode->r = r;
+    return newnode;
 }
 
 netnode *addnetnode(char data, netnode *l, netnode *r)
 {
-    netnode *new = (netnode *)malloc(sizeof(netnode));
-    new->data = data;
-    new->l = l;
-    new->r = r;
-    return new;
+    netnode *newnode = (netnode *)malloc(sizeof(netnode));
+    newnode->data = data;
+    newnode->l = l;
+    newnode->r = r;
+    return newnode;
 }
 
 node *appendnode(node *R, char din)
@@ -101,17 +101,17 @@ int findnode(char t, node *head)
     }
     return 0;
 }
-int findnetnode(char t, netnode *head)
+netnode * findnetnode(char t, netnode *head)
 {
     while (head->r != NULL)
     {
         head = head->r;
         if (head->data == t)
         {
-            return 1;
+            return head;
         }
     }
-    return 0;
+    return NULL;
 }
 
 void output(node *p)
@@ -159,7 +159,7 @@ int EDGE(netnode *N){
         while (C != '0')
         {
             scanf("%c",&C);
-            f = findnetnode(C,N);
+            netnode *f = findnetnode(C,N);
             if(f!=NULL){
                  appendnode(temp->head,C);
                  appendnode(f->head,temp->data);
