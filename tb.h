@@ -111,10 +111,10 @@ int initEDGE(netnode *N){
         temp = temp->r;
         printf("edge:%c,connected edge :",temp->data);
         p = temp->head;
-        while (p->l!=NULL)
+        while (p->n!=NULL)
         {
             printf("%c,",p->data);
-            p = p->l;
+            p = p->n;
         }
         printf("\n input new edge connected to %c end with 0",temp->data);
         while (C != '0')
