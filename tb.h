@@ -1,15 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct edge
+typedef struct
 {
     char data;
-    struct edge *n;
+    edge *n;
 } edge;
 
 typedef struct
 {
-    char data;
+    char name;
     netnode *l;
     netnode *r;
     edge *head;
@@ -26,7 +26,8 @@ edge *addedge(char data, edge *n)
 netnode *addnetnode(char data, netnode *l, netnode *r)
 {
     netnode *newnode = (netnode *)malloc(sizeof(netnode));
-    newnode->data = data;
+    newnode->head = addedge(data,NULL);
+    newnode->name = data;
     newnode->l = l;
     newnode->r = r;
     return newnode;
@@ -68,7 +69,7 @@ netnode * findnetnode(char t, netnode *head)
     while (head->r != NULL)
     {
         head = head->r;
-        if (head->data == t)
+        if (head->name == t)
         {
             return head;
         }
@@ -109,21 +110,21 @@ int initEDGE(netnode *N){
     while (temp->r!=NULL)
     {
         temp = temp->r;
-        printf("edge:%c,connected edge :",temp->data);
+        printf("edge:%c,connected edge :",temp->name);
         p = temp->head;
         while (p->n!=NULL)
         {
             printf("%c,",p->data);
             p = p->n;
         }
-        printf("\n input new edge connected to %c end with 0",temp->data);
+        printf("\n input new edge connected to %c end with 0",temp->name);
         while (C != '0')
         {
             scanf("%c",&C);
             netnode *f = findnetnode(C,N);
             if(f!=NULL){
                  appendedge(temp->head,C);
-                 appendedge(f->head,temp->data);
+                 appendedge(f->head,temp->name);
             }else{
                 printf("node not decleared\n");
             }
