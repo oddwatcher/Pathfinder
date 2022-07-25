@@ -3,8 +3,8 @@
 
 typedef struct edge
 {
-    char data;
     struct edge *n;
+    struct netnode *p;
 } edge;
 
 typedef struct netnode
@@ -12,6 +12,7 @@ typedef struct netnode
     char name;
     struct netnode *l;
     struct netnode *r;
+    int depth;
     edge *head;
 } netnode;
 
@@ -69,7 +70,7 @@ void printedge(netnode *target)
     {
         if (p != NULL)
         {
-            printf("%c\n", p->data);
+            printf("%c\n", (p->p)->name);
             p = p->n;
             i++;
         }
@@ -88,10 +89,10 @@ void printedge(netnode *target)
     }
 }
 
-edge *addedge(char i, netnode *t)
+edge *addedge(netnode *i, netnode *t)
 {
     edge *newedge = (edge *)malloc(sizeof(edge));
-    newedge->data = i;
+    newedge->p = i;
     newedge->n = t->head;
     t->head = newedge;
     return newedge;
@@ -113,8 +114,8 @@ int initedge(netnode *nethead) // add edge to netnode netnode->head,and search f
             t = findnet(i, nethead);
             if (t != NULL)
             {
-                addedge(current->name, t);
-                addedge(i, current);
+                addedge(current, t);
+                addedge(t, current);
                 edgemount++;
             }
             else
@@ -197,7 +198,7 @@ int growth(queue *q)
         while (path != NULL)
         {
             flag = 0;
-            if (eg->data != (path->data)->name)
+            if (eg->p != path->data)
             {
                 path = path->n;
             }
