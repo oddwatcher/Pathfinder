@@ -1,32 +1,39 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct
+typedef struct edge
 {
     char data;
-    edge *n;
+    struct edge *n;
 } edge;
 
-typedef struct
+typedef struct netnode
 {
     char name;
-    netnode *l;
-    netnode *r;
+    struct netnode *l;
+    struct netnode *r;
     edge *head;
 } netnode;
 
-int initnetnode(char data, netnode *nethead) // generates node list without edges a nethead which indicates the beginnning of the net
+
+int initnetnode(netnode *nethead) // generates node list without edges a nethead which indicates the beginnning of the net
 {
     int p;
+    char c;
     netnode *newnode;
     printf("number of nodes:");
     scanf("%d", &p);
-    for (int i = p; i > 0; i--)
+    fflush(stdin);
+    printf("enter node name with a signal char\n");
+    for (int i = p; i > 0;  i--)
     {
         newnode = (netnode *)malloc(sizeof(netnode));
-        scanf("%c\n", newnode->name);
+        scanf("%c", &c);
+        fflush(stdin);
+        newnode->name = c;
         newnode->l = nethead;
         newnode->r = nethead->r;
+        newnode->head = NULL;
         if (nethead->r != NULL)
         {
             (nethead->r)->l = newnode;
@@ -51,17 +58,24 @@ netnode *findnet(char name, netnode *head) // find the address of netnode by nam
 void printedge(netnode *target)
 {
     edge *p = target->head;
-    printf("connected nodes of  %c", target->name);
+    printf("connected nodes of %c :\n", target->name);
+    int i =0;
     while (1)
     {
         if (p != NULL)
         {
-            printf("%c", p->data);
+            printf("%c\n", p->data);
             p = p->n;
+            i++;
         }
         else
-        {
-            printf("end of edge\n");
+        {   
+            if(i!=0){
+                printf("total %d connected\n",i);
+            }else{
+                printf("no connected edges yet\n");
+            }
+            break;
         }
     }
 }
@@ -80,17 +94,18 @@ int initedge(netnode *nethead) // add edge to netnode netnode->head,and search f
     netnode *current = nethead->r;
     while (current != NULL)
     {
-        printf("enter connected nodes of %c ,endwith 0\n", current->name);
+        printf("enter connected nodes of %c ,already ", current->name);
         printedge(current);
         while (1)
         {
             char i;
             netnode *t;
             scanf("%c", &i);
+            fflush(stdin);
             t = findnet(i, nethead);
             if (t != NULL)
             {
-                addedge(i,t);
+                addedge(current->name,t);
                 addedge(i,current);
                 edgemount++;
             }else{
