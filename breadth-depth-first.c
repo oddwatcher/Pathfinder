@@ -1,4 +1,4 @@
-#include"tb.h"
+#include"Net.h"
 
 int main(){
     netnode *head = initnetnode();
