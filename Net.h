@@ -48,7 +48,7 @@ netnode *initnetnode() // generates node list without edges a nethead which indi
     }
     nethead->name = (char)p;
     return nethead;
-}
+}//verified
 
 netnode *findnet(char name, netnode *head) // find the address of netnode by name
 {
@@ -60,7 +60,20 @@ netnode *findnet(char name, netnode *head) // find the address of netnode by nam
         }
     }
     return NULL;
-}
+}//verified
+
+int findinedge(netnode *t, edge *h)
+{
+    while (h != NULL)
+    {
+        if ((h->node) == t)
+        {
+            return 1;
+        }
+        h = h->n;
+    }
+    return 0;
+}//verified
 
 void printedge(netnode *target)
 {
@@ -88,7 +101,7 @@ void printedge(netnode *target)
             break;
         }
     }
-}
+}//verified
 
 edge *addedge(netnode *i, netnode *t)
 {
@@ -97,7 +110,7 @@ edge *addedge(netnode *i, netnode *t)
     newedge->n = t->edge;
     t->edge = newedge;
     return newedge;
-}
+}//verified
 int initedge(netnode *nethead) // add edge to netnode netnode->head,and search for related node to add edge edge are oneway chain ;head contains data
 {
     int edgemount = 0;
@@ -128,4 +141,4 @@ int initedge(netnode *nethead) // add edge to netnode netnode->head,and search f
         current = current->r;
     }
     return edgemount;
-}
+}//verified

@@ -3,7 +3,7 @@
 #endif
 typedef struct path
 {
-    struct path *r;
+    struct path *n;
     netnode *node;
 } path; // path register the nodes on path on a reverse order head->tail,always insert the new node in the front;and rember to update the queue to point at it
 
@@ -15,38 +15,20 @@ typedef struct queue
     int plength;
 } queue; // queue register the beginning of pathes ;
 
-queue *nqueue(queue *head)
-{
-    queue *newpath = (queue *)malloc(sizeof(queue));
-    newpath->r = head->r;
-    head->r = newpath;
-    newpath->path = NULL;
-    return newpath;
-}
-
-queue *initqueue(netnode *S)
-{ // gives you a head to your queue and first queue is enlisted with S
+queue *initqueue(netnode *S) // verified
+{                            // gives you a head to your queue and first queue is enlisted with S
     queue *qhead = (queue *)malloc(sizeof(queue));
     qhead->r = NULL;
     qhead->l = NULL;
-    qhead->path = NULL;
-    path *p = (path *)malloc(sizeof(path));
-    if (S != NULL)
-    {
-        p->node = S;
-        p->r = NULL;
-        qhead->path = p;
-    }
-    else
-    {
-        printf("node not exist");
-        return NULL;
-    }
     qhead->plength = 1;
+    path *p = (path *)malloc(sizeof(path));
+    p->node = S;
+    p->n = NULL;
+    qhead->path = p;
     return qhead;
 }
 
-int findinpath(netnode *t, path *p)
+int findinpath(netnode *t, path *p) // verified
 {
     while (p != NULL)
     {
@@ -54,46 +36,50 @@ int findinpath(netnode *t, path *p)
         {
             return 1;
         }
-        p = p->r;
+        p = p->n;
     }
     return 0;
 }
 
-int findinedge(netnode *t, edge *h)
-{
-    while (h != NULL)
-    {
-        if ((h->node) == t)
-        {
-            return 1;
-        }
-        h = h->n;
-    }
-    return 0;
-}
-
-queue *enqueue(queue *p, netnode *enlist)
+queue *enqueue(queue *t, netnode *enlist) // verified
 {
     queue *newqueue = (queue *)malloc(sizeof(queue));
-    path *pa = p->path;
+    path *pt = t->path;
     path *P = (path *)malloc(sizeof(path));
     newqueue->l = NULL;
     newqueue->r = NULL;
     newqueue->plength = 0;
     newqueue->path = P;
     P->node = enlist;
-    while (pa != NULL)
+    while (pt != NULL)
     {
         (newqueue->plength)++;
-        P->r = (path *)malloc(sizeof(path));
-        P = P->r;
-        P->node = pa->node;
-        pa = pa->r;
+        P->n = (path *)malloc(sizeof(path));
+        P = P->n;
+        P->node = pt->node;
+        pt = pt->n;
     }
-    P->r = NULL;
+    P->n = NULL;
     return newqueue;
 
 } // copy the path of given queue and return the new address to connect to the rest of queue;
+
+void outputqueue(queue *head)//verified
+{
+    int i = 1;
+    path *p;
+    while (head != NULL)
+    {
+        printf("queue:%d,paths:", i);
+        p = head->path;
+        while (p != NULL)
+        {
+            printf("->%c", (p->node)->name);
+            p = p->n;
+        }
+        head = head->l;
+    }
+}
 
 queue *growth(queue *t, netnode *G) // grow the path of a given queue and return the new queue (the address of first branch ) if the branch is at end ,it return NULL
 {

@@ -4,15 +4,11 @@ int main(){
     netnode *head = initnetnode();
     printf("%d\n",(int)head->name);
     printf("total edges:%d\n",initedge(head));
-    printf("enter two node to perform search:");
     char a,b;
     scanf("%c,%c",&a,&b);
-    printf ("looking for path from %c to %c :\n",a,b);
-    queue * ans = depfirst(findnet(a,head),findnet(b,head));
-    path * o = ans->path;
-    while (o!=NULL)
-    {
-        printf("%c->",(o->node)->name);
-    }
-    printf("Done");
+    queue* qhead = initqueue(findnet(a,head));
+    outputqueue(qhead);
+    queue* temp = enqueue(qhead,findnet(b,head));
+    printf("%d",findinpath(findnet(a,head),temp->path));
+    outputqueue(temp);
 }
