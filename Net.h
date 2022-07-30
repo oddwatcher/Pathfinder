@@ -39,6 +39,7 @@ netnode *initnetnode() // generates node list without edges a nethead which indi
         newnode->l = nethead;
         newnode->r = nethead->r;
         newnode->edge = NULL;
+        newnode->flag = 0;
         if (nethead->r != NULL)
         {
             (nethead->r)->l = newnode;
