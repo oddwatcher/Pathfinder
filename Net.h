@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+#define Net
 typedef struct edge
 {
     struct edge *n;

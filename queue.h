@@ -1,13 +1,15 @@
+#ifndef Net
 #include "Net.h"
+#endif
 typedef struct path
 {
-    struct path *n;
+    struct path *r;
     netnode *node;
 } path; // path register the nodes on path on a reverse order head->tail,always insert the new node in the front;and rember to update the queue to point at it
 
 typedef struct queue
 {
-    struct queue *n;
+    struct queue *r;
     struct queue *l;
     path *path;
     int plength;
@@ -16,34 +18,31 @@ typedef struct queue
 queue *nqueue(queue *head)
 {
     queue *newpath = (queue *)malloc(sizeof(queue));
-    newpath->n = head->n;
-    head->n = newpath;
+    newpath->r = head->r;
+    head->r = newpath;
     newpath->path = NULL;
     return newpath;
 }
 
-queue *initqueue(char s, netnode *nethead)
-{
+queue *initqueue(netnode *S)
+{ // gives you a head to your queue and first queue is enlisted with S
     queue *qhead = (queue *)malloc(sizeof(queue));
-    qhead->n = NULL;
+    qhead->r = NULL;
+    qhead->l = NULL;
     qhead->path = NULL;
-    queue *f = nqueue(qhead);
     path *p = (path *)malloc(sizeof(path));
-    netnode *S = findnet(s, nethead);
     if (S != NULL)
     {
         p->node = S;
-        p->n = NULL;
-        f->path = p;
+        p->r = NULL;
+        qhead->path = p;
     }
     else
     {
         printf("node not exist");
         return NULL;
     }
-    f->n = NULL;
-    f->plength = 1;
-    p->n = NULL;
+    qhead->plength = 1;
     return qhead;
 }
 
@@ -55,7 +54,7 @@ int findinpath(netnode *t, path *p)
         {
             return 1;
         }
-        p = p->n;
+        p = p->r;
     }
     return 0;
 }
@@ -79,63 +78,89 @@ queue *enqueue(queue *p, netnode *enlist)
     path *pa = p->path;
     path *P = (path *)malloc(sizeof(path));
     newqueue->l = NULL;
-    newqueue->n = NULL;
+    newqueue->r = NULL;
     newqueue->plength = 0;
     newqueue->path = P;
     P->node = enlist;
     while (pa != NULL)
     {
         (newqueue->plength)++;
-        P->n = (path *)malloc(sizeof(path));
-        P = P->n;
+        P->r = (path *)malloc(sizeof(path));
+        P = P->r;
         P->node = pa->node;
-        pa = pa->n;
+        pa = pa->r;
     }
-    P->n = NULL;
+    P->r = NULL;
     return newqueue;
 
 } // copy the path of given queue and return the new address to connect to the rest of queue;
 
-queue *growth(queue *t, netnode *goal) // grow the path of a given queue and return the new queue (the address of first branch )
+queue *growth(queue *t, netnode *G) // grow the path of a given queue and return the new queue (the address of first branch ) if the branch is at end ,it return NULL
 {
     path *p = t->path;
     edge *e = (p->node)->edge;
-    queue *head = (queue *)malloc(sizeof(queue));
+    queue *head = (queue *)malloc(sizeof(queue)); // holds grown queues
     head->l = NULL;
-    head->n = NULL;
-    head->path = NULL;
-    head->plength = 0;
-    queue *temp = NULL;
-    int i = 0;
-    while (e != NULL)
+    head->r = NULL;
+    queue *temp = NULL; // temp to hold just generated new queue address
+    int i = 0;          // counter for leaf check
+
+    (p->node)->flag = 1; // set the current node as extended
+
+    while (e != NULL) // tell if this node is at leaf
     {
         i = i++;
         e = e->n;
     }
-    if (i == 1)
+
+    if (i <= 1) // if node is already at leaf it is grown
     {
         return NULL;
     }
-    e = (p->node)->edge;
+
+    e = (p->node)->edge; // reset edge indicator
 
     while (e != NULL)
-    {                                                                // goes over the edges of first node(leaf) and not going back or go to extended ones use enqueue to get the queue and attach it behind the head
+    {                                                                // goes over the edges of last node on path and not going back or go to extended ones use enqueue to get the queue and attach it behind the head
         if ((findinpath(e->node, p) == 0) && ((e->node)->flag == 0)) // use of extended list
         {
-            temp = enqueue(t, e->node);
+            temp = enqueue(t, e->node); // attach the new queue to head
             temp->l = head;
-            temp->n = head->n;
-            if (head->n != NULL)
+            temp->r = head->r;
+            if (head->r != NULL)
             {
-                (head->n)->l = temp;
+                (head->r)->l = temp;
             }
-            head->n = temp;
-            e->node->flag = 1;
+            head->r = temp;
+        }
+        if (G == e->node)
+        {
+            break;
         }
         e = e->n;
     }
-    temp = head->n;
+    temp = head->r; // remove head
     temp->l = NULL;
     free(head);
-    return temp;
+    return temp; // temp is at the leftest(head) of queue only use its left to attach
+}
+
+queue *depfirst(netnode *S, netnode *G)
+{
+    queue *Q = initqueue(S);
+    queue *temp = NULL;
+    while (1)
+    {
+        temp = growth(Q, G);
+        Q->r = temp;
+        temp->l = Q;
+        while (Q->r != NULL)
+        {
+            if ((Q->path)->node == G)
+            {
+                return Q;
+            }
+            Q = Q->r;
+        }
+    }
 }
