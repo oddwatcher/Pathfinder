@@ -4,7 +4,7 @@
 typedef struct edge
 {
     struct edge *n;
-    struct netnode *p;
+    struct netnode *node;
 } edge;
 
 typedef struct netnode
@@ -12,8 +12,8 @@ typedef struct netnode
     char name;
     struct netnode *l;
     struct netnode *r;
-    int depth;
-    edge *head;
+    int flag;
+    edge *edge;
 } netnode;
 
 netnode *initnetnode() // generates node list without edges a nethead which indicates the beginnning of the net
@@ -22,7 +22,7 @@ netnode *initnetnode() // generates node list without edges a nethead which indi
     char c;
     netnode *newnode;
     netnode *nethead = (netnode *)malloc(sizeof(netnode));
-    nethead->head = NULL;
+    nethead->edge = NULL;
     nethead->r = NULL;
     nethead->name = '1';
     nethead->l = NULL;
@@ -38,7 +38,7 @@ netnode *initnetnode() // generates node list without edges a nethead which indi
         newnode->name = c;
         newnode->l = nethead;
         newnode->r = nethead->r;
-        newnode->head = NULL;
+        newnode->edge = NULL;
         if (nethead->r != NULL)
         {
             (nethead->r)->l = newnode;
@@ -63,14 +63,14 @@ netnode *findnet(char name, netnode *head) // find the address of netnode by nam
 
 void printedge(netnode *target)
 {
-    edge *p = target->head;
+    edge *p = target->edge;
     printf("connected nodes of %c :\n", target->name);
     int i = 0;
     while (1)
     {
         if (p != NULL)
         {
-            printf("%c\n", (p->p)->name);
+            printf("%c\n", (p->node)->name);
             p = p->n;
             i++;
         }
@@ -92,9 +92,9 @@ void printedge(netnode *target)
 edge *addedge(netnode *i, netnode *t)
 {
     edge *newedge = (edge *)malloc(sizeof(edge));
-    newedge->p = i;
-    newedge->n = t->head;
-    t->head = newedge;
+    newedge->node = i;
+    newedge->n = t->edge;
+    t->edge = newedge;
     return newedge;
 }
 int initedge(netnode *nethead) // add edge to netnode netnode->head,and search for related node to add edge edge are oneway chain ;head contains data
