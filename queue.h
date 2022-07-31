@@ -15,17 +15,22 @@ typedef struct queue
     int plength;
 } queue; // queue register the beginning of pathes ;
 
-queue *initqueue(netnode *S) // verified
-{                            // gives you a head to your queue and first queue is enlisted with S
+queue *initqueue(netnode *S)// verified
+{ // gives you a head to your queue and first queue is enlisted with S
+    queue *head = (queue *)malloc(sizeof(queue));
     queue *qhead = (queue *)malloc(sizeof(queue));
+    head->l = NULL;
+    head->path = NULL;
+    head->plength = 0;
+    head->r = qhead;
+    qhead->l = head;
     qhead->r = NULL;
-    qhead->l = NULL;
     qhead->plength = 1;
     path *p = (path *)malloc(sizeof(path));
     p->node = S;
     p->n = NULL;
     qhead->path = p;
-    return qhead;
+    return head;
 }
 
 int findinpath(netnode *t, path *p) // verified
@@ -64,10 +69,11 @@ queue *enqueue(queue *t, netnode *enlist) // verified
 
 } // copy the path of given queue and return the new address to connect to the rest of queue;
 
-void outputqueue(queue *head)//verified
-{
+void outputqueue(queue *head)// verified
+{ // give the head of a queue at rightest,will print every queue and the path it had
     int i = 1;
     path *p;
+    head = head->r;
     while (head != NULL)
     {
         printf("queue:%d,paths:", i);
@@ -81,21 +87,23 @@ void outputqueue(queue *head)//verified
         i++;
         printf("\n");
     }
-    
 }
 
-queue *growth(queue *t, netnode *G) //verified
-{// grow the path of a given queue and return the new queue (the address of first branch ) if the branch is at end ,it return NULL
+queue *growth(queue *t, netnode *G)
+{ // grow the path of a given queue and return the new queue (the address of first branch ) if the branch is at end ,it return t
     path *p = t->path;
     edge *e = (p->node)->edge;
-    queue *head = (queue *)malloc(sizeof(queue)); // holds grown queues
-    head->l = NULL;
-    head->r = NULL;
-    head->path = NULL;
-    head->plength=0;
-    queue *temp = NULL; // temp to hold just generated new queue address
-    int i = 0;          // counter for leaf check
-
+    queue head ; // holds grown queues
+    head.l = NULL;
+    head.r = NULL;
+    head.path = NULL;
+    head.plength = 0;
+    queue *temp = NULL;       // temp to hold just generated new queue address
+    int i = 0;                // counter for leaf check
+    if ((p->node)->flag == 1) // if the current queue is already growned by else, do nothing
+    {
+        return t;
+    }
     (p->node)->flag = 1; // set the current node as extended
 
     while (e != NULL) // tell if this node is at leaf
@@ -104,53 +112,96 @@ queue *growth(queue *t, netnode *G) //verified
         e = e->n;
     }
 
-    if (i == 1) // if node is already at leaf it is grown
+    if (i == 1) // if node is already at leaf,do nothing
     {
-        return NULL;
+        return t;
     }
 
     e = (p->node)->edge; // reset edge indicator
-
+    i = 0;               // reset growth counter
     while (e != NULL)
     {                                                                // goes over the edges of last node on path and not going back or go to extended ones use enqueue to get the queue and attach it behind the head
         if ((findinpath(e->node, p) == 0) && ((e->node)->flag == 0)) // use of extended list
         {
             temp = enqueue(t, e->node); // attach the new queue to head
-            temp->l = head;
-            temp->r = head->r;
-            if (head->r != NULL)
+            temp->l =&head;
+            temp->r = head.r;
+            if (head.r != NULL)
             {
-                (head->r)->l = temp;
+                (head.r)->l = temp;
             }
-            head->r = temp;
+            head.r = temp;
+            i++;
         }
+        
         if (G == e->node)
         {
             break;
         }
         e = e->n;
     }
-    free(head);
-    temp->l = NULL;
-    return temp; // temp is at the leftest(head) of queue only use its left to attach
+    if (i != 0)
+    {
+        temp->l = NULL;
+        return temp; // temp is at the leftest(head) of queue only use its left to attach
+    }
+    else
+    {
+        return t; // if all edges are grown by else nothing will be grown so do nothing
+    }
+}
+
+queue *delqueue(queue *Q)// verified
+{ // remove given queue and return right or left of it if its not NULL
+    queue *t;
+    if (Q->l != NULL)
+    {
+        (Q->l)->r = Q->r;
+        t = Q->l;
+    }
+    if (Q->r != NULL)
+    {
+        (Q->r)->l = Q->l;
+        t = Q->r;
+    }
+    free(Q);
+    return t;
 }
 
 queue *depfirst(netnode *S, netnode *G)
 {
-    queue *Q = initqueue(S);
+    queue *P = initqueue(S); // head to queue and at rightest
     queue *temp = NULL;
+    queue *Q = P->r;
     while (1)
     {
-        temp = growth(Q, G);
-        Q->r = temp;
-        temp->l = Q;
-        while (Q->r != NULL)
+        if ((Q->path)->node == G) // check if current path reaches goal
         {
-            if ((Q->path)->node == G)
+            return Q;
+        }
+        if (((Q->path)->node)->flag == 1)// see if current queue is already extended by else
+        {                    
+            Q = delqueue(Q); // if is grown remove this queue
+        }
+        temp = growth(Q, G); // grow the queue
+        if (temp == Q)       // if not growable
+        {
+            Q = delqueue(Q); // delete queue
+            if (Q == P)      // if no more queue is avaliable
             {
-                return Q;
+                printf("No Path\n"); // exit
+                return NULL;
             }
-            Q = Q->r;
+        }
+        else // if the queue is growable
+        {
+            Q = delqueue(Q); // remove growed queue
+            Q->r = temp;     // attach new branches to the tree
+            temp->l = Q;
+            while (Q->r != NULL) // move Q to the rightest of queues
+            {
+                Q = Q->r;
+            }
         }
     }
 }

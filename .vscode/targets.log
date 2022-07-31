@@ -9,11 +9,13 @@ make: *** No rule to make target 'all'.  Stop.
 # There is NO WARRANTY, to the extent permitted by law.
  
 
-# Make data base, printed on Sat Jul 30 09:42:48 2022
-
-# Variables
+# Make data base, printed on Sun Jul 31 13:45:45 2022
 
  
+# Variables
+
+# environment
+FPS_BROWSER_APP_PROFILE_STRING = Internet Explorer
 # environment
 SYSTEMDRIVE = C:
 # environment
@@ -37,7 +39,9 @@ MGLS_LICENSE_FILE = D:\Modelsim2019\LICENSE.TXT
 # automatic
 @D = $(patsubst %/,%,$(dir $@))
 # environment
-CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_1944_LKDLMXECMEFZGXQA
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_3192_GMXNXAUXYZOWLFCP
+# environment
+FPS_BROWSER_USER_PROFILE_STRING = Default
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # default
@@ -71,6 +75,7 @@ APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
+ 
 PROGRAMFILES = C:\Program Files
 # environment
 MFLAGS = -pqrR
@@ -87,7 +92,7 @@ MAKEFILE_LIST :=
 # automatic
 @F = $(notdir $@)
 # environment
-VSCODE_PID = 1944
+VSCODE_PID = 3192
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # automatic
@@ -142,6 +147,7 @@ PROGRAMW6432 = C:\Program Files
 PATHEXT = .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC
 # automatic
 +F = $(notdir $+)
+ 
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = undefined
 # environment
@@ -205,7 +211,7 @@ PROCESSOR_REVISION = 9e0a
 # environment
 PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 158 Stepping 10, GenuineIntel
 # variable set hash-table stats:
-# Load=95/1024=9%, Rehash=0, Collisions=12/119=10%
+# Load=97/1024=9%, Rehash=0, Collisions=13/121=11%
 
 # Pattern-specific Variable Values
 
@@ -232,7 +238,6 @@ Makefile:
 
 # Not a target:
 .DEFAULT:
- 
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -272,6 +277,6 @@ GNUmakefile:
 # strcache performance: lookups = 19 / hit rate = 15%
 # hash-table stats:
 # Load=16/8192=0%, Rehash=0, Collisions=0/19=0%
-# Finished Make data base on Sat Jul 30 09:42:48 2022
+# Finished Make data base on Sun Jul 31 13:45:45 2022
 
  
