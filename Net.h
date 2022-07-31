@@ -16,8 +16,8 @@ typedef struct netnode
     edge *edge;
 } netnode;
 
-netnode *initnetnode() // generates node list without edges a nethead which indicates the beginnning of the net
-{
+netnode *initnetnode() //verified
+{// generates node list without edges a nethead which indicates the beginnning of the net
     int p;
     char c;
     netnode *newnode;
@@ -48,10 +48,10 @@ netnode *initnetnode() // generates node list without edges a nethead which indi
     }
     nethead->name = (char)p;
     return nethead;
-}//verified
+}
 
-netnode *findnet(char name, netnode *head) // find the address of netnode by name
-{
+netnode *findnet(char name, netnode *head) //verified
+{// find the address of netnode by name
     for (netnode *p = head->r; p != NULL; p = p->r)
     {
         if (p->name == name)
@@ -60,9 +60,9 @@ netnode *findnet(char name, netnode *head) // find the address of netnode by nam
         }
     }
     return NULL;
-}//verified
+}
 
-int findinedge(netnode *t, edge *h)
+int findinedge(netnode *t, edge *h)//verified
 {
     while (h != NULL)
     {
@@ -75,7 +75,7 @@ int findinedge(netnode *t, edge *h)
     return 0;
 }//verified
 
-void printedge(netnode *target)
+void printedge(netnode *target)//verified
 {
     edge *p = target->edge;
     printf("connected nodes of %c :\n", target->name);
@@ -103,7 +103,7 @@ void printedge(netnode *target)
     }
 }//verified
 
-edge *addedge(netnode *i, netnode *t)
+edge *addedge(netnode *i, netnode *t)//verified
 {
     edge *newedge = (edge *)malloc(sizeof(edge));
     newedge->node = i;
@@ -111,8 +111,8 @@ edge *addedge(netnode *i, netnode *t)
     t->edge = newedge;
     return newedge;
 }//verified
-int initedge(netnode *nethead) // add edge to netnode netnode->head,and search for related node to add edge edge are oneway chain ;head contains data
-{
+int initedge(netnode *nethead) //verified
+{// add edge to netnode netnode->head,and search for related node to add edge edge are oneway chain ;head contains data
     int edgemount = 0;
     netnode *current = nethead->r;
     while (current != NULL)
