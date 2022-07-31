@@ -89,7 +89,7 @@ void outputqueue(queue *head)// verified
     }
 }
 
-queue *growth(queue *t, netnode *G)
+queue *growth(queue *t, netnode *G)// verified
 { // grow the path of a given queue and return the new queue (the address of first branch ) if the branch is at end ,it return t
     path *p = t->path;
     edge *e = (p->node)->edge;
@@ -168,7 +168,7 @@ queue *delqueue(queue *Q)// verified
     return t;
 }
 
-queue *depfirst(netnode *S, netnode *G)
+queue *depfirst(netnode *S, netnode *G)// verified
 {
     queue *P = initqueue(S); // head to queue and at rightest
     queue *temp = NULL;

@@ -73,7 +73,7 @@ int findinedge(netnode *t, edge *h)//verified
         h = h->n;
     }
     return 0;
-}//verified
+}
 
 void printedge(netnode *target)//verified
 {
@@ -101,7 +101,7 @@ void printedge(netnode *target)//verified
             break;
         }
     }
-}//verified
+}
 
 edge *addedge(netnode *i, netnode *t)//verified
 {
@@ -110,7 +110,7 @@ edge *addedge(netnode *i, netnode *t)//verified
     newedge->n = t->edge;
     t->edge = newedge;
     return newedge;
-}//verified
+}
 int initedge(netnode *nethead) //verified
 {// add edge to netnode netnode->head,and search for related node to add edge edge are oneway chain ;head contains data
     int edgemount = 0;
@@ -141,4 +141,4 @@ int initedge(netnode *nethead) //verified
         current = current->r;
     }
     return edgemount;
-}//verified
+}
