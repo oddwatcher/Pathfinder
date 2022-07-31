@@ -77,13 +77,15 @@ void outputqueue(queue *head)//verified
             printf("->%c", (p->node)->name);
             p = p->n;
         }
-        head = head->l;
+        head = head->r;
+        i++;
+        printf("\n");
     }
-    printf("\n");
+    
 }
 
-queue *growth(queue *t, netnode *G) // grow the path of a given queue and return the new queue (the address of first branch ) if the branch is at end ,it return NULL
-{
+queue *growth(queue *t, netnode *G) //verified
+{// grow the path of a given queue and return the new queue (the address of first branch ) if the branch is at end ,it return NULL
     path *p = t->path;
     edge *e = (p->node)->edge;
     queue *head = (queue *)malloc(sizeof(queue)); // holds grown queues

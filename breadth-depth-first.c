@@ -1,4 +1,3 @@
-#include"Net.h"
 #include"queue.h"
 int main(){
     netnode *head = initnetnode();
