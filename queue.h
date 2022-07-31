@@ -79,6 +79,7 @@ void outputqueue(queue *head)//verified
         }
         head = head->l;
     }
+    printf("\n");
 }
 
 queue *growth(queue *t, netnode *G) // grow the path of a given queue and return the new queue (the address of first branch ) if the branch is at end ,it return NULL
@@ -88,6 +89,8 @@ queue *growth(queue *t, netnode *G) // grow the path of a given queue and return
     queue *head = (queue *)malloc(sizeof(queue)); // holds grown queues
     head->l = NULL;
     head->r = NULL;
+    head->path = NULL;
+    head->plength=0;
     queue *temp = NULL; // temp to hold just generated new queue address
     int i = 0;          // counter for leaf check
 
@@ -95,11 +98,11 @@ queue *growth(queue *t, netnode *G) // grow the path of a given queue and return
 
     while (e != NULL) // tell if this node is at leaf
     {
-        i = i++;
+        i++;
         e = e->n;
     }
 
-    if (i <= 1) // if node is already at leaf it is grown
+    if (i == 1) // if node is already at leaf it is grown
     {
         return NULL;
     }
@@ -125,9 +128,8 @@ queue *growth(queue *t, netnode *G) // grow the path of a given queue and return
         }
         e = e->n;
     }
-    temp = head->r; // remove head
-    temp->l = NULL;
     free(head);
+    temp->l = NULL;
     return temp; // temp is at the leftest(head) of queue only use its left to attach
 }
 

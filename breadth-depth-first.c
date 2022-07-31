@@ -6,9 +6,16 @@ int main(){
     printf("total edges:%d\n",initedge(head));
     char a,b;
     scanf("%c,%c",&a,&b);
-    queue* qhead = initqueue(findnet(a,head));
+    netnode *A = findnet(a,head);
+    netnode*B = findnet(b,head);
+    queue* qhead = initqueue(A);
     outputqueue(qhead);
-    queue* temp = enqueue(qhead,findnet(b,head));
-    printf("%d",findinpath(findnet(a,head),temp->path));
+    queue* temp = enqueue(qhead,B);
+    printf("%d\n",findinpath(A,temp->path));
+    outputqueue(temp);
+    temp = growth(qhead,B);
+    if(temp == NULL){
+        printf("temp is NULL");
+    }
     outputqueue(temp);
 }
