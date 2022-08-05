@@ -183,24 +183,27 @@ queue *depfirst(netnode *S, netnode *G) // verified
         {
             Q = delqueue(Q); // if is grown remove this queue
         }
-        temp = growth(Q, G); // grow the queue
-        if (temp == Q)       // if not growable
+        else
         {
-            Q = delqueue(Q); // delete queue
-            if (Q == P)      // if no more queue is avaliable
+            temp = growth(Q, G); // grow the queue
+            if (temp == Q)       // if not growable
             {
-                printf("No Path\n"); // exit
-                return NULL;
+                Q = delqueue(Q); // delete queue
+                if (Q == P)      // if no more queue is avaliable
+                {
+                    printf("No Path\n"); // exit
+                    return NULL;
+                }
             }
-        }
-        else // if the queue is growable
-        {
-            Q = delqueue(Q); // remove growed queue
-            Q->r = temp;     // attach new branches to the tree
-            temp->l = Q;
-            while (Q->r != NULL) // move Q to the rightest of queues
+            else // if the queue is growable
             {
-                Q = Q->r;
+                Q = delqueue(Q); // remove growed queue
+                Q->r = temp;     // attach new branches to the tree
+                temp->l = Q;
+                while (Q->r != NULL) // move Q to the rightest of queues
+                {
+                    Q = Q->r;
+                }
             }
         }
     }
@@ -223,51 +226,52 @@ queue *delqueue_l(queue *Q) // verified
     return t;
 }
 
-
-
 queue *brefirst(netnode *S, netnode *G)
 {
     queue *P = initqueue(S); // head to queue and at rightest
     queue *temp = NULL;
-    queue *Q = P->r;
+    queue *Q = NULL;
     queue *tail = NULL;
     while (1)
     {
+        Q = P->r;
         if ((Q->path)->node == G) // check if current path reaches goal
         {
             return Q;
         }
         if (((Q->path)->node)->flag == 1) // see if current queue is already extended by else
         {
-            Q = delqueue_l(Q); // if is grown remove this queue
-            if (Q == P)
-            {                        // if no more queue is avaliable
+            Q = delqueue(Q); // if is grown remove this queue
+            if (P->r == NULL)
+            {                          // if no more queue is avaliable
                 printf("No Path 0\n"); // exit
                 return NULL;
             }
         }
-
-        temp = growth(Q, G); // grow the queue
-
-        if (temp == Q) // if not growable
+        else
         {
-            Q = delqueue_l(Q); // delete queue
-            if (Q == P)        // if no more queue is avaliable
+            temp = growth(Q, G); // grow the queue
+
+            if (temp == Q) // if not growable
             {
-                printf("No Path 1\n"); // exit
-                return NULL;
+                Q = delqueue(Q);  // delete queue
+                if (P->r == NULL) // if no more queue is avaliable
+                {
+                    printf("No Path 1\n"); // exit
+                    return NULL;
+                }
             }
-        }
-        else // if the queue is growable
-        {
-            tail = P;               // maintain tail
-            while (tail->r != NULL) // move tail to the rightest of queues
+            else // if the queue is growable
             {
-                tail = tail->r;
+                tail = P;               // maintain tail
+                while (tail->r != NULL) // move tail to the rightest of queues
+                {
+                    tail = tail->r;
+                }
+                tail->r = temp; // attach new branches to the tree
+                temp->l = tail;
+                Q = delqueue_l(Q); // remove growed queue
             }
-            tail->r = temp; // attach new branches to the tree
-            temp->l = tail;
-            Q = delqueue_l(Q);      // remove growed queue
         }
     }
 }
