@@ -148,7 +148,7 @@ int flagpurge(netnode *nethead)
     int i = 0;
     while (nethead != NULL)
     {
-        nethead->flag == 0;
+        nethead->flag = 0;
         nethead = nethead->r;
         i++;
     }

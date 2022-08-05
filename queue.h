@@ -242,7 +242,7 @@ queue *brefirst(netnode *S, netnode *G)
             Q = delqueue_l(Q); // if is grown remove this queue
             if (Q == P)
             {                        // if no more queue is avaliable
-                printf("No Path\n"); // exit
+                printf("No Path 0\n"); // exit
                 return NULL;
             }
         }
@@ -254,13 +254,12 @@ queue *brefirst(netnode *S, netnode *G)
             Q = delqueue_l(Q); // delete queue
             if (Q == P)        // if no more queue is avaliable
             {
-                printf("No Path\n"); // exit
+                printf("No Path 1\n"); // exit
                 return NULL;
             }
         }
         else // if the queue is growable
         {
-            Q = delqueue_l(Q);      // remove growed queue
             tail = P;               // maintain tail
             while (tail->r != NULL) // move tail to the rightest of queues
             {
@@ -268,6 +267,7 @@ queue *brefirst(netnode *S, netnode *G)
             }
             tail->r = temp; // attach new branches to the tree
             temp->l = tail;
+            Q = delqueue_l(Q);      // remove growed queue
         }
     }
 }
