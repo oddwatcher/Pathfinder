@@ -89,7 +89,7 @@ void outputqueue(queue *head) // verified
     }
 }
 
-queue *growth(queue *t, netnode *G) // verified
+queue *growth(queue *t, netnode *G) // NOT verified when the node is the last of netnode error happends
 {                                   // grow the path of a given queue and return the new queue (the address of first branch ) if the branch is at end ,it return t
     path *p = t->path;
     edge *e = (p->node)->edge;
