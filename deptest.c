@@ -10,4 +10,7 @@ int main(){
     queue * qhead = (queue*)malloc(sizeof(queue));
     qhead->r = depfirst(A,B);
     outputqueue(qhead);
+    printf("purging flags:%d\n",flagpurge(head));
+    qhead->r = brefirst(A,B);
+    outputqueue(qhead);
 }
