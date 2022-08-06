@@ -9,11 +9,11 @@ make: *** No rule to make target 'all'.  Stop.
 # There is NO WARRANTY, to the extent permitted by law.
  
 
-# Make data base, printed on Fri Aug  5 12:26:49 2022
+# Make data base, printed on Sat Aug  6 07:54:23 2022
 
 # Variables
- 
 
+ 
 # environment
 FPS_BROWSER_APP_PROFILE_STRING = Internet Explorer
 # environment
@@ -39,7 +39,7 @@ MGLS_LICENSE_FILE = D:\Modelsim2019\LICENSE.TXT
 # automatic
 @D = $(patsubst %/,%,$(dir $@))
 # environment
-CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_17376_ESQTCUTZRMUXTZRV
+CHROME_CRASHPAD_PIPE_NAME = \\.\pipe\crashpad_2720_CGEGPKMBWWOHDEJD
 # environment
 FPS_BROWSER_USER_PROFILE_STRING = Default
 # environment
@@ -91,7 +91,7 @@ MAKEFILE_LIST :=
 # automatic
 @F = $(notdir $@)
 # environment
-VSCODE_PID = 17376
+VSCODE_PID = 2720
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # automatic
@@ -99,7 +99,6 @@ VSCODE_PID = 17376
 # automatic
 <D = $(patsubst %/,%,$(dir $<))
 # environment
- 
 VSCODE_NLS_CONFIG = {"locale":"zh-cn","availableLanguages":{},"_languagePackSupport":true}
 # environment
 ONEDRIVECONSUMER = C:\Users\scien\OneDrive
@@ -119,12 +118,13 @@ DRIVERDATA = C:\Windows\System32\Drivers\DriverData
 COMSPEC = C:\WINDOWS\system32\cmd.exe
 # environment
 WINDIR = C:\WINDOWS
+ 
 # environment
 MAKELEVEL := 0
 # default
 MAKE = $(MAKE_COMMAND)
 # environment
-PATH = /c/Program Files (x86)/Common Files/Intel/Shared Libraries/redist/intel64/compiler:/c/Windows/system32:/c/Windows:/c/Windows/System32/Wbem:/c/Windows/System32/WindowsPowerShell/v1.0:/c/Windows/System32/OpenSSH:/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR:/c/WINDOWS/system32:/c/WINDOWS:/c/WINDOWS/System32/Wbem:/c/WINDOWS/System32/WindowsPowerShell/v1.0:/c/WINDOWS/System32/OpenSSH:/c/Users/scien/AppData/Local/Programs/Python/Python39:/c/Users/scien/AppData/Local/Programs/Python/Python39/Scripts:/d/Program Files/Polyspace/R2021a/runtime/win64:/d/Program Files/Polyspace/R2021a/bin:/d/Program Files/Polyspace/R2021a/polyspace/bin:/d/Program Files/MiKTeX 2.9/miktex/bin/x64:/c/Program Files/Git/cmd:/c/Users/scien/AppData/Local/Programs/Python/Python38/Scripts:/c/Users/scien/AppData/Local/Programs/Python/Python38:/c/Users/scien/AppData/Local/Microsoft/WindowsApps:/d/Modelsim2019/win64:/c/Users/scien/Programs/Microsoft VS Code/bin:/mingw64/bin:/usr/bin:/c/Program Files/Git/cmd:/c/Users/scien/AppData/Local/Android/Sdk/platform-tools
+PATH = /c/Program Files/Common Files/Oracle/Java/javapath:/c/Program Files (x86)/Common Files/Intel/Shared Libraries/redist/intel64/compiler:/c/Windows/system32:/c/Windows:/c/Windows/System32/Wbem:/c/Windows/System32/WindowsPowerShell/v1.0:/c/Windows/System32/OpenSSH:/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR:/c/WINDOWS/system32:/c/WINDOWS:/c/WINDOWS/System32/Wbem:/c/WINDOWS/System32/WindowsPowerShell/v1.0:/c/WINDOWS/System32/OpenSSH:/c/Users/scien/AppData/Local/Programs/Python/Python39:/c/Users/scien/AppData/Local/Programs/Python/Python39/Scripts:/d/Program Files/Polyspace/R2021a/runtime/win64:/d/Program Files/Polyspace/R2021a/bin:/d/Program Files/Polyspace/R2021a/polyspace/bin:/d/Program Files/MiKTeX 2.9/miktex/bin/x64:/c/Program Files/Git/cmd:/c/Users/scien/AppData/Local/Programs/Python/Python38/Scripts:/c/Users/scien/AppData/Local/Programs/Python/Python38:/c/Users/scien/AppData/Local/Microsoft/WindowsApps:/d/Modelsim2019/win64:/c/Users/scien/Programs/Microsoft VS Code/bin:/mingw64/bin:/usr/bin:/c/Program Files/Git/cmd:/c/Users/scien/AppData/Local/Android/Sdk/platform-tools
 # environment
 COMPUTERNAME = LAPTOP-9JS1B16A
 # default
@@ -177,7 +177,6 @@ APPDATA = C:\Users\scien\AppData\Roaming
 HOMEDRIVE = C:
 # environment
 PROCESSOR_ARCHITECTURE = AMD64
- 
 # environment
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
@@ -199,6 +198,7 @@ TERM = xterm-256color
 # default
 SUFFIXES := 
 # environment
+ 
 ALLUSERSPROFILE = C:\ProgramData
 # environment
 SESSIONNAME = Console
@@ -219,9 +219,9 @@ PROCESSOR_IDENTIFIER = Intel64 Family 6 Model 158 Stepping 10, GenuineIntel
 
 # Directories
 
-# . (device 738459633, inode 3659174697934624): 11 files, no impossibilities.
+# . (device 738459633, inode 3659174697934624): 12 files, no impossibilities.
 
-# 11 files, no impossibilities in 1 directories.
+# 12 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -238,7 +238,6 @@ Makefile:
 
 # Not a target:
 .DEFAULT:
- 
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -246,6 +245,7 @@ Makefile:
 # Not a target:
 all:
 #  Command line target.
+ 
 #  Implicit rule search has been done.
 #  File does not exist.
 #  File has not been updated.
@@ -272,12 +272,12 @@ GNUmakefile:
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 18 / storage = 177 B / avg = 9 B
-# current buf: size = 8162 B / used = 177 B / count = 18 / avg = 9 B
+# strcache buffers: 1 (0) / strings = 19 / storage = 188 B / avg = 9 B
+# current buf: size = 8162 B / used = 188 B / count = 19 / avg = 9 B
 
-# strcache performance: lookups = 21 / hit rate = 14%
+# strcache performance: lookups = 22 / hit rate = 13%
 # hash-table stats:
-# Load=18/8192=0%, Rehash=0, Collisions=0/21=0%
-# Finished Make data base on Fri Aug  5 12:26:49 2022
+# Load=19/8192=0%, Rehash=0, Collisions=0/22=0%
+# Finished Make data base on Sat Aug  6 07:54:23 2022
 
  

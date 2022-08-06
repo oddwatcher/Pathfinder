@@ -89,7 +89,7 @@ void outputqueue(queue *head) // verified
     }
 }
 
-queue *growth(queue *t, netnode *G) // NOT verified when the node is the last of netnode error happends
+queue *growth(queue *t, netnode *G) // verified
 {                                   // grow the path of a given queue and return the new queue (the address of first branch ) if the branch is at end ,it return t
     path *p = t->path;
     edge *e = (p->node)->edge;
@@ -99,32 +99,20 @@ queue *growth(queue *t, netnode *G) // NOT verified when the node is the last of
     head.path = NULL;
     head.plength = 0;
     queue *temp = NULL;       // temp to hold just generated new queue address
-    int i = 0;                // counter for leaf check
+    int i = 0;                // counter for growth check
     if ((p->node)->flag == 1) // if the current queue is already growned by else, do nothing
     {
         return t;
     }
+
     (p->node)->flag = 1; // set the current node as extended
 
-    while (e != NULL) // tell if this node is at leaf
-    {
-        i++;
-        e = e->n;
-    }
-
-    if (i == 1) // if node is already at leaf,do nothing
-    {
-        return t;
-    }
-
-    e = (p->node)->edge; // reset edge indicator
-    i = 0;               // reset growth counter
     while (e != NULL)
     {                                                                // goes over the edges of last node on path and not going back or go to extended ones use enqueue to get the queue and attach it behind the head
         if ((findinpath(e->node, p) == 0) && ((e->node)->flag == 0)) // use of extended list
         {
-            temp = enqueue(t, e->node); // attach the new queue to head
-            temp->l = &head;
+            temp = enqueue(t, e->node); //generates new queue
+            temp->l = &head;// attach the new queue to head
             temp->r = head.r;
             if (head.r != NULL)
             {
@@ -134,13 +122,13 @@ queue *growth(queue *t, netnode *G) // NOT verified when the node is the last of
             i++;
         }
 
-        if (G == e->node)
+        if (G == e->node) // if reachs goal stop at once
         {
             break;
         }
         e = e->n;
     }
-    if (i != 0)
+    if (i != 0) // if there is a new branch grown 
     {
         temp->l = NULL;
         return temp; // temp is at the leftest(head) of queue only use its left to attach
