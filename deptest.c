@@ -18,13 +18,9 @@ int main()
         else
         {
             queue *qhead = (queue *)malloc(sizeof(queue));
-            qhead->r = depfirst(A, B);
-            (qhead->r)->r = NULL;
-            outputqueue(qhead);
+            outputqueue(depfirst(A, B));
             printf("purging flags:%d\n", flagpurge(head));
-            qhead->r = brefirst(A, B);
-            (qhead->r)->r = NULL;
-            outputqueue(qhead);
+            outputqueue(brefirst(A, B));
             printf("purging flags:%d\n", flagpurge(head));
         }
     }

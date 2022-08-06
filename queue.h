@@ -73,7 +73,6 @@ void outputqueue(queue *head) // verified
 {                             // give the head of a queue at rightest,will print every queue and the path it had
     int i = 1;
     path *p;
-    head = head->r;
     while (head != NULL)
     {
         printf("queue:%d,paths:", i);
@@ -197,23 +196,6 @@ queue *depfirst(netnode *S, netnode *G) // verified
     }
 }
 
-queue *delqueue_l(queue *Q) // verified
-{                           // remove given queue and return right or left of it if its not NULL
-    queue *t;
-    if (Q->r != NULL)
-    {
-        (Q->r)->l = Q->l;
-        t = Q->r;
-    }
-    if (Q->l != NULL)
-    {
-        (Q->l)->r = Q->r;
-        t = Q->l;
-    }
-    free(Q);
-    return t;
-}
-
 queue *brefirst(netnode *S, netnode *G)
 {
     queue *P = initqueue(S); // head to queue and at rightest
@@ -258,7 +240,7 @@ queue *brefirst(netnode *S, netnode *G)
                 }
                 tail->r = temp; // attach new branches to the tree
                 temp->l = tail;
-                Q = delqueue_l(Q); // remove growed queue
+                delqueue(Q); // remove growed queue
             }
         }
     }
