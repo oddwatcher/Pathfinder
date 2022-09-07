@@ -11,6 +11,7 @@ int main()
         scanf("%c,%c", &a, &b);
         netnode *A = findnet(a, head);
         netnode *B = findnet(b, head);
+
         if ((A == NULL) || (B == NULL))
         {
             printf("node not exist\n");
@@ -24,4 +25,4 @@ int main()
             printf("purging flags:%d\n", flagpurge(head));
         }
     }
-}
+} 

@@ -4,6 +4,7 @@
 typedef struct path
 {
     struct path *n;
+    int w;
     netnode *node;
 } path; // path register the nodes on path on a reverse order head->tail,always insert the new node in the front;and rember to update the queue to point at it
 
@@ -110,8 +111,8 @@ queue *growth(queue *t, netnode *G) // verified
     {                                                                // goes over the edges of last node on path and not going back or go to extended ones use enqueue to get the queue and attach it behind the head
         if ((findinpath(e->node, p) == 0) && ((e->node)->flag == 0)) // use of extended list
         {
-            temp = enqueue(t, e->node); //generates new queue
-            temp->l = &head;// attach the new queue to head
+            temp = enqueue(t, e->node); // generates new queue
+            temp->l = &head;            // attach the new queue to head
             temp->r = head.r;
             if (head.r != NULL)
             {
@@ -127,7 +128,7 @@ queue *growth(queue *t, netnode *G) // verified
         }
         e = e->n;
     }
-    if (i != 0) // if there is a new branch grown 
+    if (i != 0) // if there is a new branch grown
     {
         temp->l = NULL;
         return temp; // temp is at the leftest(head) of queue only use its left to attach
@@ -196,7 +197,7 @@ queue *depfirst(netnode *S, netnode *G) // verified
     }
 }
 
-queue *brefirst(netnode *S, netnode *G)
+queue *brefirst(netnode *S, netnode *G) //verified
 {
     queue *P = initqueue(S); // head to queue and at rightest
     queue *temp = NULL;
@@ -244,4 +245,14 @@ queue *brefirst(netnode *S, netnode *G)
             }
         }
     }
+}
+
+int pathw (path* p ){
+
+}
+
+queue *Apath(netnode *S, netnode *G)
+{
+    queue *head = initqueue(S);
+    
 }

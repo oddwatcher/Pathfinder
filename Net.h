@@ -5,6 +5,7 @@ typedef struct edge
 {
     struct edge *n;
     struct netnode *node;
+    int w;
 } edge;
 
 typedef struct netnode
@@ -84,7 +85,7 @@ void printedge(netnode *target) // verified
     {
         if (p != NULL)
         {
-            printf("%c\n", (p->node)->name);
+            printf("%c,weight = %d\n", (p->node)->name,p->w);
             p = p->n;
             i++;
         }
@@ -103,10 +104,11 @@ void printedge(netnode *target) // verified
     }
 }
 
-edge *addedge(netnode *i, netnode *t) // verified
+edge *addedge(netnode *i, netnode *t, int w) // verified
 {
     edge *newedge = (edge *)malloc(sizeof(edge));
     newedge->node = i;
+    newedge->w = w;
     newedge->n = t->edge;
     t->edge = newedge;
     return newedge;
@@ -128,8 +130,12 @@ int initedge(netnode *nethead) // verified
             t = findnet(i, nethead);
             if (t != NULL)
             {
-                addedge(current, t);
-                addedge(t, current);
+                int w = 0;
+                fflush(stdin);
+                printf("weight:");
+                scanf("%d", &w);
+                addedge(current, t, w);
+                addedge(t, current, w);
                 edgemount++;
             }
             else
